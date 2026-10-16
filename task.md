@@ -11,7 +11,7 @@ is over and nothing gets submitted. Steps 7 to 11 are written only after both of
 
 | Field | Value |
 |---|---|
-| Subdomain | Cell/Molecular Biology |
+| Subdomain | Immunology |
 | Where did the image(s) come from | External - open-access |
 | Source URL or DOI | https://doi.org/10.1371/journal.pone.0173975 |
 | License | CC BY 4.0 |
