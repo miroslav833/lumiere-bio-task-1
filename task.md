@@ -68,10 +68,18 @@ at 0, 100, 200, 300, 400 and 500 U/L, and those ticks sit 167.1 pixel rows apart
 
 Two groups clear both conditions, so the answer is 2.
 
-Rounding to the nearest 10 U/L the way the prompt asks turns the two qualifying ratios into
-210/50 = 4.2 and 270/40 = 6.75, both still well over 2, while the three steatotic groups sit at
-0.98, 0.99 and 1.06 and come nowhere near it. No group lands anywhere close to the threshold of
-2, so a sloppy reading of any bar leaves the count where it is.
+The prompt asks for a reading by eye against ticks which stand 100 U/L apart, and the count
+survives that. Rounding every bar to the nearest 25 U/L gives ratios of 4.00, 5.50, 0.91, 1.00
+and 1.08, and rounding to the nearest 50 U/L gives 4.00, 6.00, 1.00, 1.00 and 1.17. The two
+qualifying groups stay far above the threshold of 2 under both, and the three steatotic groups
+stay near 1, so no plausible misreading of a bar moves the answer.
+
+The checker raised three findings on the first wording and all three were taken. It called the
+old closing line open ended, so the prompt now asks for the call on each section and the values
+read before the integer. It called "most of the hepatocytes" soft, so the rule is now more than
+half of the hepatocytes in the field. It pointed out that a reading to the nearest 10 U/L is
+finer than an axis ticked every 100 U/L can support, which is right, so the prompt now asks for
+a reading by eye against those ticks.
 
 What each section in panel A actually shows:
 
