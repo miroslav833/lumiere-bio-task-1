@@ -1,16 +1,13 @@
-# Current attempt: 1 (liver histology plus serum transaminases, count of groups)
+# Biology task 1, attempt 1: liver sections and serum transaminases
 
 Status: NOT YET RUN.
 
-Instructions for the extension run:
-
-1. Read the form table below, fill it in, upload image.png, paste the prompt under
-   "## Step 4. Prompt" exactly as written.
-2. Tick boxes 1, 3, 4. Leave box 2 for Miroslav.
-3. Wait for both model blocks, log them as feedback/001.md: expected answer, verdict, checker
-   findings, Block 1 raw, Block 2 raw with reasoning.
-4. Both must be wrong. If either answers 2, stop and report. Steps 7 to 11 are written only
-   after both fail. Do not press submit.
+How to run it. Fill the form from the table below, upload image.png, and paste the prompt from
+prompt.md word for word, because prompt.md is the copy which was humanized and checked. Tick
+boxes 1, 3 and 4, and leave box 2 for Miroslav. Wait for both model blocks, then save them as
+feedback/001.md with the expected answer, the verdict, any checker findings, and both blocks in
+full including their reasoning. Both blocks have to be wrong, so if either one answers 2 the run
+is over and nothing gets submitted. Steps 7 to 11 are written only after both of them fail.
 
 | Field | Value |
 |---|---|
@@ -20,24 +17,17 @@ Instructions for the extension run:
 | License | CC BY 4.0 |
 | Reference material | A wild-type mouse-based model for the regression of inflammation in atherosclerosis |
 | Publication venue | PLoS ONE 12(3): e0173975, 14 March 2017 |
-| Image | image.png, Figure 4 of that article, 3483 x 4171, unmodified |
+| Image | image.png, Figure 4 of that article, 3483 x 4171, nothing changed |
 
-Attribution line for the form if one is asked for: Peled M, Nishi H, Weinstock A, Barrett TJ,
-Zhou F, Quezada A, Fisher EA (2017) PLoS ONE 12(3): e0173975, Figure 4, CC BY 4.0.
+If the form asks for an attribution line, use this one. Peled M, Nishi H, Weinstock A,
+Barrett TJ, Zhou F, Quezada A, Fisher EA (2017) PLoS ONE 12(3): e0173975, Figure 4, CC BY 4.0.
 
 ---
 
 ## Step 4. Prompt
 
-Image 1 has two panels from a mouse study of diet-induced liver change. Panel A shows haematoxylin and eosin stained liver sections from five groups of mice, each group labelled above its own section. Panel B shows the mean serum aspartate aminotransferase and the mean serum alanine aminotransferase of the same five groups, with the group names on the horizontal axis and the enzyme identity in the legend.
-
-Count the groups which meet both of the conditions below, and report that count.
-
-Condition one is histological. The liver section of the group shows no macrovesicular steatosis. A section counts as steatotic when large round clear vacuoles fill most of the hepatocytes across the whole field. Isolated clear spaces which are vessel lumens or bile ducts are not steatosis, and a section with only those counts as free of steatosis.
-
-Condition two is biochemical. The ratio of mean aspartate aminotransferase to mean alanine aminotransferase for that group is greater than 2. Read each bar to the nearest 10 U/L, use the bar top and not the top of the error bar, and treat the values read that way as exact.
-
-Report your final answer as a single integer, with no units and no further text.
+The prompt lives in prompt.md so that one file is the only thing anybody copies. Paste that file
+and nothing else.
 
 ---
 
@@ -56,16 +46,17 @@ Report your final answer as a single integer, with no units and no further text.
 | My prompt is self-contained and fully solvable without external resources. | True |
 | The prompt can only be solved with the information in the image. | True |
 
-Checker note: NON_FOUNDATIONAL_REFERENCE is a known false positive on every image task. Record
-it and continue. Rebuttal text is in the playbook under task-pass-experience section 4.
+NON_FOUNDATIONAL_REFERENCE fires on every image task because the checker reads the prompt
+without the attachment, so record it and carry on. The rebuttal wording sits in the playbook
+under task-pass-experience section 4.
 
 ---
 
 ## Ground truth
 
-Ten bar readings and five histology calls. Values below were measured from the pixels of
-image.png with tools/decode_g004c.py, using the y axis ticks at 0, 100, 200, 300, 400 and
-500 U/L, which sit 167.1 pixel rows apart.
+The answer rests on ten bar readings and five calls on the sections. Every number below came out
+of the pixels of image.png with tools/decode_g004c.py, which calibrates against the y axis ticks
+at 0, 100, 200, 300, 400 and 500 U/L, and those ticks sit 167.1 pixel rows apart.
 
 | group | AST U/L | ALT U/L | AST/ALT | section | counts |
 |---|---|---|---|---|---|
@@ -75,52 +66,60 @@ image.png with tools/decode_g004c.py, using the y axis ticks at 0, 100, 200, 300
 | Progression | 247 | 249 | 0.99 | steatotic | no |
 | Western only | 340 | 319 | 1.06 | steatotic | no |
 
-Two groups meet both conditions, so the answer is 2.
+Two groups clear both conditions, so the answer is 2.
 
-Read to the nearest 10 U/L the ratios are 210/50 = 4.2 and 270/40 = 6.75, both still above 2,
-and the three steatotic groups sit at 0.98, 0.99 and 1.06, all far below 2. The threshold of 2
-has no group anywhere near it, so the count does not move with reading error.
+Rounding to the nearest 10 U/L the way the prompt asks turns the two qualifying ratios into
+210/50 = 4.2 and 270/40 = 6.75, both still well over 2, while the three steatotic groups sit at
+0.98, 0.99 and 1.06 and come nowhere near it. No group lands anywhere close to the threshold of
+2, so a sloppy reading of any bar leaves the count where it is.
 
-Panel A, what each section shows:
-- Base-line, upper left. Large clear round vacuoles across the entire field, most hepatocytes
-  affected. Steatotic.
-- Chow regression, upper right. Uniform eosinophilic hepatocyte cords. Three or four clear
-  spaces which are a central vein and portal tracts, plus one dark basophilic focus. No vacuoles
-  in the hepatocytes. Clean.
-- MTPi regression, middle left. Same picture as chow regression, five clear vessel lumens of
-  varying size scattered through an otherwise solid field. Clean.
-- Progression, middle right. Vacuoles across the whole field, same as base-line. Steatotic.
-- Western only, lower left. Vacuoles across the whole field, the coarsest of the five.
-  Steatotic.
+What each section in panel A actually shows:
+
+- Base-line, upper left. Large round clear vacuoles over the entire field with most hepatocytes
+  taken up by them, so the section is steatotic.
+- Chow regression, upper right. Even eosinophilic hepatocyte cords, with three or four clear
+  spaces which are a central vein and portal tracts, and one dark basophilic focus. The
+  hepatocytes themselves carry no vacuoles, so the section is clean.
+- MTPi regression, middle left. The same picture as chow regression, where five vessel lumens of
+  different sizes are scattered through a field which is otherwise solid, so the section is clean.
+- Progression, middle right. Vacuoles over the whole field in the same way as base-line, so the
+  section is steatotic.
+- Western only, lower left. Vacuoles over the whole field and the coarsest of the five, so the
+  section is steatotic.
 
 ## Where the levers are
 
-1. The two clean sections are not empty. Each carries several large white spaces which are
-   vessel lumens, and in a thumbnail they read as lipid droplets. Calling either section
-   steatotic drops the count to 1 or 0. This is the signal versus artifact failure mode the
-   Biology guide lists, and it is built into the image rather than added to it.
-2. Panel B has two series and the legend is the only thing which says which is which. Swapping
-   aspartate aminotransferase for alanine aminotransferase inverts both ratios of interest to
-   0.22 and 0.16 and gives a count of 0.
-3. Every bar carries an error bar whose cap sits well above the bar top. Reading the cap instead
-   of the bar lifts base-line to about 310 and chow to about 250, which does not change the
-   count, so this one is a distraction rather than a trap. The prompt rules it out anyway.
-4. The answer needs all five sections classified and all ten bars read. One misclassification
-   moves the count.
+The two clean sections are not blank, and that is the whole trap. Each of them carries several
+large white spaces which are vessel lumens, and at thumbnail size those spaces read as fat
+droplets, so a model which calls either section steatotic drops the count to 1 or to 0. The
+Biology guide lists signal versus artifact as a failure mode to aim at, and here it already sits
+in the image instead of being added to it.
 
-## Wrong answers and what they encode
+Panel B carries two series and only the legend says which is which, so a model which swaps
+aspartate aminotransferase for alanine aminotransferase turns the two ratios that matter into
+0.22 and 0.16 and reports a count of 0.
 
-| answer | error it encodes |
+Every bar carries an error bar whose cap stands well above the top of the bar. Reading the cap
+lifts base-line to about 310 and chow regression to about 250, neither of which moves the count,
+so this one is a distraction rather than a trap, and the prompt rules it out anyway.
+
+All five sections have to be classified and all ten bars have to be read before the count comes
+out, so one wrong call anywhere moves the answer.
+
+## Wrong answers and what each one means
+
+| answer | what the model did |
 |---|---|
-| 0 | both clean sections read as steatotic, vessel lumens taken for lipid droplets |
-| 1 | one of the two clean sections read as steatotic |
-| 3 | the Western only section read as clean, or the ratio condition dropped |
-| 4 | the ratio condition applied to the wrong series, or ignored |
-| 5 | both conditions ignored, every group counted |
+| 0 | read both clean sections as steatotic and took vessel lumens for fat droplets |
+| 1 | read one of the two clean sections as steatotic |
+| 3 | read the Western only section as clean, or dropped the ratio condition |
+| 4 | applied the ratio condition to the wrong series, or ignored it |
+| 5 | ignored both conditions and counted every group |
 
-## Why this design
+## Why the answer is a count and not a measurement
 
-Every numeric readout in this figure sits on an axis with ticks every 100 U/L and no minor
-gridlines, so no three significant figure answer can be defended from it. The count is the
-quantity the figure can carry exactly. The histology call is the part a model has to get right
-from pixels, and the ratio test is what stops the count being a bare tally.
+Every number in this figure sits on an axis with ticks every 100 U/L and no minor gridlines
+between them, so no three significant figure answer can be defended from it and a reviewer with
+a straight edge would not get one either. A count is the quantity this figure can carry exactly.
+The call on the sections is the part a model has to earn from the pixels, and the ratio test is
+what keeps the count from being a bare tally.
